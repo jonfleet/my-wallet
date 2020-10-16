@@ -1,3 +1,4 @@
 {
-    "apiEndpoint" : "http://localhost:3700"
+    "apiEndpoint" : "http://localhost:3700",
+    "homepage" : "/dashboard/main"
 }

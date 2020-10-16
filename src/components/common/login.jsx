@@ -1,6 +1,11 @@
 import React from 'react';
+import Form from "../helper_functions/form"
+import _ from "lodash"
 import Joi from "joi"
-import Form from "./form"
+import config from "../../config.json"
+import Input from "./input"
+import NewUser from '../newUser'
+import {login} from "../../services/loginService"
 
 // Fix the disabled Button
 // Add Username and Password length and complexity requirements requirement 
@@ -19,64 +24,67 @@ class Login extends Form {
     schema: Joi.object({
       username: Joi.string().required().label("Username"),
       password: Joi.string().required().label("Password"),  
-    })
+    }),
+    entry: {username: "", password: ""}
   };
 
-  validate = () => {
-    const {data} = this.state  
-    const errors = {}
-    if(data.username === "")
-      errors.username = "Username is required";
-    if(data.password === "")
-      errors.password = "Password is required";
-     
-    return errors
-  }
+handleSubmit = (e) => {
+    e.preventDefault();
+    const {data} = this.state
+    const errors = this.validateProperty()
+    // console.log("Returned Errors: ", errors)  
+    
+    this.setState({errors: errors})
+    // console.log(this.state.errors)
+    
+    // console.log("username: ", this.state)
+    // console.log("Is Empty: ", _.isEmpty(errors))
+    if (_.isEmpty(errors)){
+      this.doSubmit(login(data.username, data.password))
+    }
+}
 
-  doSubmit = () => {
-    // Call Server
-    console.log("Server Called")
-  }
+render() { 
+  const {data, errors} = this.state
+  // console.log("R Er ", errors)
+  return (
+    <form onSubmit={this.handleSubmit} className="container w-25 mt-5 form-signin">
+        <div className="text-center mb-4">
+            <FontAwesomeIcon className="fa-5x"icon={faWallet}/>
+            <h1 className="h3 mb-3 font-weight-normal">Login</h1>
+        </div>
+        <Input 
+          label="Username"
+          name="username"
+          value={data.username}
+          onChange={this.handleChange}
+          errors={errors}
+          type="text"
+        />
+        <Input 
+          label="Password"
+          name="password"
+          value={data.password}
+          onChange={this.handleChange}
+          errors={errors}
+          type="password"
+        />
 
-  handleChange = ({currentTarget: input}) =>  {
-    // console.log("State: ", this.state)
-    const data = {...this.state.data};
-    data[input.name] = input.value;
-    this.setState({data})
-    // console.log(this.state.data)
-  } 
-
-  disableBtn (){
-    const result = this.validateProperty() == {} ? false : true
-    console.log(this.validateProperty())
-    console.log(this.state.errors === {} )
-    console.log("disable result: ", result)
-    return false
-  }
-
-
-  render() { 
-
-    return (
-      <form onSubmit={this.handleSubmit} className="container w-25 mt-5 form-signin">
-          <div className="text-center mb-4">
-              <FontAwesomeIcon className="fa-5x"icon={faWallet}/>
-              <h1 className="h3 mb-3 font-weight-normal">Login</h1>
-          </div>
-
-          {this.renderInput("Username", "username", "text")}
-          {this.renderInput("Password", "password", "password")}
-
-          <div className="checkbox mb-3 mt-3">
-            <input type="checkbox" value="remember-me"></input>
-            <label className="ml-1">
-              Remember me
-            </label>
-          </div>
-          {this.renderButton("Sign In")}
-          <p className="mt-5 mb-3 text-muted text-center">&copy; 2020</p>
-      </form>
-      );
+        <div className="checkbox mb-3 mt-3">
+          <input type="checkbox" value="remember-me"></input>
+          <label className="ml-1">
+            Remember me
+          </label>
+        </div>
+        {/* {this.renderButton("Sign In")} */}
+        <button className="btn btn-lg btn-primary btn-block" type="submit">
+          Sign In
+        </button>
+        <NewUser />
+        <p className="mt-3 mb-3 text-muted text-center">&copy; My Wallet Inc 2020</p>
+        
+    </form>
+    );
   }
 }
  

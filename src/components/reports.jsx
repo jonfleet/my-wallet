@@ -17,6 +17,7 @@ class Report extends Component {
         pageItems: 3,
         currentPage: 0,
         dataLength: null,
+        token: localStorage.jwt,
     }
     
     // {key: 1, 
@@ -32,7 +33,7 @@ class Report extends Component {
     }
 
     async componentDidMount(){
-        const {data} = await getReports()
+        const {data} = await getReports(this.state.token)
         const dataLength = data.length
         this.setState({data})
         this.setState({dataLength})
@@ -73,7 +74,7 @@ class Report extends Component {
         const {data, months, selectedMonth, pageItems, currentPage} = this.state
         // console.log("Selected Month:" , selectedMonth)
         
-        
+        console.log("Local Storage: ", localStorage )
         
         const filtered = selectedMonth.length !== 0 
             ? data.filter(item => item.date.toLowerCase() === selectedMonth) 

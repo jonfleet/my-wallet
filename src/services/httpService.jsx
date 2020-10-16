@@ -18,6 +18,7 @@ axios.interceptors.response.use(null, (error) => {
 });
 
 axios.interceptors.request.use( (request) => {
+  // const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjgyMmQ5NzczYTJlZTNiYjA4ZDExOTYiLCJpYXQiOjE2MDI1MjE5ODV9.uyX9hzWR8TyEz9wWSwYGwe4JowJ28tTolaMaRfbOa-M'
   axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*'
   request.headers = {...request.headers, "Access-Control-Allow-Origin": "http://localhost:3700"}
   console.log(request)

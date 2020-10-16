@@ -5,6 +5,7 @@ import Main from "./components/main"
 import {Switch, Route, Redirect} from "react-router-dom"
 
 import Login from "./components/common/login"
+import SignUp from "./components/signUp"
 
 
 class App extends Component {
@@ -17,6 +18,7 @@ class App extends Component {
       <Switch>
         <Route path="/main/:element" exact component={Main}/>
         <Route path="/login" component={Login}/>
+        <Route path="/sign-up" component={SignUp} />
         <Redirect to="/main/dashboard"/>
       </Switch>
       

@@ -6,7 +6,13 @@ import {faWallet} from "@fortawesome/free-solid-svg-icons"
 import Login from "./common/login"
 
 class heading extends Component {
-    state = {  }
+    signOut = () => {
+        localStorage.removeItem('jwt')
+
+        window.location = '/main/dashboard'
+        // this.props.history.push('/main/dashboard')
+    }
+    
     render() { 
         return ( 
         <div>
@@ -20,7 +26,7 @@ class heading extends Component {
                     </div>
                 </NavLink>
                 <NavLink className="navbar-brand ml-auto" to="/login"><h6>Login</h6></NavLink>
-                <NavLink className="navbar-brand" to="/main/dashboard"><h6>Sign Out</h6></NavLink>
+                <NavLink className="navbar-brand" to="/main/dashboard"><h6><a onClick={this.signOut}>Sign Out</a></h6></NavLink>
             </nav>
         </div> 
     );
