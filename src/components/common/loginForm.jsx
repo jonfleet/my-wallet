@@ -5,7 +5,7 @@ import Joi from "joi"
 import config from "../../config.json"
 import Input from "./input"
 import NewUser from '../newUser'
-import {login} from "../../services/loginService"
+import auth from "../../services/authService"
 
 // Fix the disabled Button
 // Add Username and Password length and complexity requirements requirement 
@@ -26,6 +26,7 @@ class Login extends Form {
       password: Joi.string().required().label("Password"),  
     }),
     entry: {username: "", password: ""}
+    
   };
 
 handleSubmit = (e) => {
@@ -40,7 +41,7 @@ handleSubmit = (e) => {
     // console.log("username: ", this.state)
     // console.log("Is Empty: ", _.isEmpty(errors))
     if (_.isEmpty(errors)){
-      this.doSubmit(login(data.username, data.password))
+      this.doSubmit(auth.login(data.username, data.password))
     }
 }
 

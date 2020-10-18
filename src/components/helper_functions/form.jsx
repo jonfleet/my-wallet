@@ -1,6 +1,6 @@
 import { Component } from 'react';
 import config from "../../config.json"
-
+import auth from "../../services/authService"
 
 class Form extends Component {
 
@@ -30,8 +30,10 @@ class Form extends Component {
         // console.log("Waiting for login call")
         try{
           const response = await apiCall
-          localStorage.setItem('jwt', response.headers['x-auth-token'])
+          console.log("Create User Response: ", response)
+          auth.loginWithJWT(response.headers["x-auth-token"])
           window.location = config.homepage
+          // this.props.history.push("/")
     
         } catch(ex){
           // console.log("Exception: ", ex)

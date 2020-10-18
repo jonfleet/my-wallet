@@ -1,9 +1,10 @@
 import React from 'react';
 import Form from "./helper_functions/form"
 import Input from "./common/input"
+import config from "../config.json"
 
 // Services
-import {createUser} from "../services/userService"
+import User from "../services/userService"
 
 // 3rd Party Modules
 import _ from "lodash"
@@ -14,7 +15,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
 import {faClipboardList} from "@fortawesome/free-solid-svg-icons"
 // import auth from '../../../my-wallet-api/middleware/auth';
 
-class SignUp extends Form {
+class RegisterForm extends Form {
   state = {  
     data: {username: "", password: "", confirmPassword: ""},
     errors: {},
@@ -43,8 +44,7 @@ class SignUp extends Form {
     this.setState({errors})
     // console.log("Errors: ", errors)
     if(_.isEmpty(errors)){
-        this.doSubmit(createUser(this.state.data))
-        // window.location = config.homepage
+        this.doSubmit(User.createUser(this.state.data))
     }
   }
 
@@ -91,4 +91,4 @@ class SignUp extends Form {
   }
 }
 
-export default SignUp;
+export default RegisterForm;
