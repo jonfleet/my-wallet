@@ -16,7 +16,7 @@ import NotFound from './not-found'
 const MainElement = () => {
     // const {url, path} = useParams()
     const {path, url} = useRouteMatch()
-    console.log("URL: ", url);
+    // console.log("URL: ", url);
     // const name = url.substr(1, url.length-1)
     // console.log(name)
     const elements = [
@@ -28,7 +28,7 @@ const MainElement = () => {
 
     function generateElement () { 
         let result = elements.filter(element => element.path === url)
-        console.log(result)
+        // console.log(result)
         if(result.length === 0){
             console.log('not found')
             return <NotFound key="not-found"/>

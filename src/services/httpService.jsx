@@ -4,8 +4,6 @@ import React from "react";
 import auth from "./authService"
 import axios from "axios";
 
-axios.defaults.headers.common['Access-Control-Allow-Origin'] = 'http://localhost:3700'
-axios.defaults.headers.common['x-auth-token'] = auth.getJwt();
 
 // console.log("HTTP auth", auth.getJwt())
 axios.interceptors.response.use(null, (error) => {
@@ -14,6 +12,10 @@ axios.interceptors.response.use(null, (error) => {
     error.response.status >= 400 &&
     error.response.status < 500;
 
+  axios.defaults.headers.common['Access-Control-Allow-Origin'] = 'http://localhost:3700'
+  axios.defaults.headers.common['x-auth-token'] = auth.getJwt();
+    
+    
   if (!expectedError) {
     console.log("Loggin the error", error);
     // toast.error("An unexpected error occured.");

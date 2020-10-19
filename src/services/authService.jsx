@@ -30,7 +30,8 @@ export function getCurrentUser(){
 }
 
 export function getJwt(){
-    return localStorage.getItem(tokenKey)
+    const JWT = localStorage.getItem('jwt')
+    return JWT
 }
 
 export default {
