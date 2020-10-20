@@ -4,12 +4,14 @@ import jwt_decode from "jwt-decode"
 import axios from "axios"
 
 const tokenKey = "jwt"
-
+const apiEndpoint = config.apiEndpoint + "/auth"
+// const apiEndpoint = "/auth"
 // http.setJwt(localStorage.getItem(tokenKey))
+
 
 export function login(username, password){
     const payload = {"username" : username, "password": password}
-    return http.post(config.apiEndpoint + "/auth", payload)
+    return http.post(apiEndpoint, payload)
 }
 
 export function loginWithJWT(jwt){

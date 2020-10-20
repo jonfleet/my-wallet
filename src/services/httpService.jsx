@@ -5,6 +5,8 @@ import auth from "./authService"
 import axios from "axios";
 
 
+axios.defaults.baseURL = process.env.REACT_APP_API_URL
+
 // console.log("HTTP auth", auth.getJwt())
 axios.interceptors.response.use(null, (error) => {
   const expectedError =
@@ -14,7 +16,8 @@ axios.interceptors.response.use(null, (error) => {
 
   axios.defaults.headers.common['Access-Control-Allow-Origin'] = 'http://localhost:3700'
   axios.defaults.headers.common['x-auth-token'] = auth.getJwt();
-    
+  
+  // console.log("HTTP URL: ", process.env.REACT_APP_API_URL)  
     
   if (!expectedError) {
     console.log("Loggin the error", error);

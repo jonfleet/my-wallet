@@ -13,7 +13,7 @@ import Register from "./components/registerForm"
 import Profile from "./components/profile"
 import Logout from "./components/logout"
 
-
+// console.log("Env: ", process.env.REACT_APP_API_URL)
 class App extends Component {
   state = {  }
 
