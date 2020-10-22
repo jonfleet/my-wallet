@@ -4,8 +4,8 @@ import jwt_decode from "jwt-decode"
 import axios from "axios"
 
 const tokenKey = "jwt"
-const apiEndpoint = config.apiEndpoint + "/auth"
-// const apiEndpoint = "/auth"
+// const apiEndpoint = config.apiEndpoint + "/auth"
+const apiEndpoint = "/auth"
 // http.setJwt(localStorage.getItem(tokenKey))
 
 

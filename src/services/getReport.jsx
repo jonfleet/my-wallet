@@ -6,15 +6,16 @@ import axios from "axios"
 // const apiEndpoint = config.apiEndpoint + "/report"
 const apiEndpoint = "/report"
 
-// export function getReports(){
-//     return  http.get(config.apiEndpoint + "/report")
+export function getReports(){
+    return  http.get(apiEndpoint)
+}
+
+// export function getReports(token){
+//     return http.get( apiEndpoint, { headers: {
+//         "x-auth-token" : token
+//     }})
 // }
 
-export function getReports(token){
-    return http.get( apiEndpoint, { headers: {
-        "x-auth-token" : token
-    }})
-}
 // axios({
 //     method: 'get',
 //     url: 'http://bit.ly/2mTM3nY',

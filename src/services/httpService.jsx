@@ -6,7 +6,10 @@ import axios from "axios";
 
 
 axios.defaults.baseURL = process.env.REACT_APP_API_URL
+axios.defaults.headers.common['x-auth-token'] = localStorage.getItem('jwt');
+axios.defaults.headers.common['Access-Control-Allow-Origin'] = process.env.REACT_APP_API_URL
 
+// auth.getJwt()
 // console.log("HTTP auth", auth.getJwt())
 axios.interceptors.response.use(null, (error) => {
   const expectedError =
@@ -14,8 +17,6 @@ axios.interceptors.response.use(null, (error) => {
     error.response.status >= 400 &&
     error.response.status < 500;
 
-  axios.defaults.headers.common['Access-Control-Allow-Origin'] = 'http://localhost:3700'
-  axios.defaults.headers.common['x-auth-token'] = auth.getJwt();
   
   // console.log("HTTP URL: ", process.env.REACT_APP_API_URL)  
     

@@ -33,7 +33,7 @@ class Report extends Component {
     }
 
     async componentDidMount(){
-        const {data} = await getReports(this.state.token)
+        const {data} = await getReports()
         const dataLength = data.length
         this.setState({data})
         this.setState({dataLength})
@@ -66,7 +66,7 @@ class Report extends Component {
         // console.log("currentPage: ", currentPage)
         let startIndex = currentPage * pageItems;
         const paginatedData = data.slice(startIndex, startIndex + pageItems)
-        console.log("PagData: ", paginatedData)
+        // console.log("PagData: ", paginatedData)
         return paginatedData
     }
 
@@ -74,7 +74,7 @@ class Report extends Component {
         const {data, months, selectedMonth, pageItems, currentPage} = this.state
         // console.log("Selected Month:" , selectedMonth)
         
-        console.log("Local Storage: ", localStorage )
+        // console.log("Local Storage: ", localStorage )
         
         const filtered = selectedMonth.length !== 0 
             ? data.filter(item => item.date.toLowerCase() === selectedMonth) 

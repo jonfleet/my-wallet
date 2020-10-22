@@ -1,5 +1,5 @@
-{
-    "apiEndpoint" : "http://localhost:3700",
+{    
+    "apiEndpoint" : "https://mysterious-bayou-32982.herokuapp.com",
     "homepage" : "/dashboard/main",
     "auth-token" : "jwt"
 }
