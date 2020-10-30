@@ -60,6 +60,23 @@ class Budget extends ListGroup {
     
     // Calcuate Spent Totals
 
+    // Modify Budget Table
+    changeTable = changeOptions => {
+        var newBudget = [...this.state.budget]
+        console.log("clone", newBudget)
+        for (let i = 0; i < newBudget.length; i++ ){
+            console.log("a")
+            if(newBudget[i].category == changeOptions.category) {
+                newBudget[i] = {category: changeOptions.category, budget : changeOptions.amount, spent: 0}
+                console.log(newBudget)
+                return
+            }    
+        }
+        
+        // console.log("Parent Change Options: ", changeOptions)
+        this.setState({budget : newBudget})
+    }
+
     render() { 
         const { budget, months, activeMonth } = this.state
         
@@ -78,7 +95,9 @@ class Budget extends ListGroup {
                     <BudgetTable items={budget} />
                 </div>
                 <div className="col">
-                    <BudgetForm />
+                    <BudgetForm 
+                    onSubmit={this.changeTable}
+                    />
                 </div>
             </div>
 

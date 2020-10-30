@@ -3,8 +3,8 @@ import React, {Component} from 'react';
 class BudgetForm extends Component {
     state = {
         changeOptions : {
-            Category: "",
-            amount: undefined,
+            category: undefined,
+            amount: null,
         }   
     }
 
@@ -16,8 +16,9 @@ class BudgetForm extends Component {
     }
 
     render() { 
-        // const {changeBudget} = this.props
-        // console.log(this.props)
+        const {onSubmit} = this.props
+        const {changeOptions} = this.state
+        console.log(changeOptions)
         return (
             <div className="container mt-3">
                 <form action="">
@@ -27,24 +28,48 @@ class BudgetForm extends Component {
                     <div className="input-group mb-3 w-50">
                         
                         <div className="input-group-prepend">
-                            <label className="input-group-text" htmlFor="inputGroupSelect01">Category</label>
+                            <label 
+                                className="input-group-text" 
+                                htmlFor="inputGroupSelect01"
+                            >
+                            Category
+                            </label>
                         </div>
-                        <select name="category" value={this.state.changeOptions.category} onChange={this.handleChange}className="custom-select" id="inputGroupSelect01">
+                        <select 
+                            name="category" 
+                            value={this.state.changeOptions.category} 
+                            onChange={this.handleChange}
+                            className="custom-select" 
+                            id="inputGroupSelect01"
+                            >
                             <option >Choose...</option>
-                            <option value="groceries">Groceries</option>
-                            <option value="entertainment">Entertainment</option>
-                            <option value="travel">Travel</option>
-                            <option value="rent">Rent</option>
-                            <option value="utilities">Utilities</option>
-                            <option value="dining">Dining</option>
+                            <option value="Groceries">Groceries</option>
+                            <option value="Entertainment">Entertainment</option>
+                            <option value="Travel">Travel</option>
+                            <option value="Rent">Rent</option>
+                            <option value="Utilities">Utilities</option>
+                            <option value="Dining">Dining</option>
                         </select>
                     </div>
                     <div className="form-group w-25">
                         <label>Budgeted Amount</label>
-                        <input name="amount" value={this.state.changeOptions.amount} onChange={this.handleChange} type="email" className="form-control" id="exampleFormControlInput1" placeholder="$_.__"></input>
+                        <input 
+                         name="amount" 
+                         value={this.state.changeOptions.amount} 
+                         onChange={this.handleChange} 
+                         type="number" 
+                         className="form-control"
+                         id="exampleFormControlInput1" 
+                         placeholder="$_.__"
+                        >
+                        </input>
                     </div>
-                    <button onClick={() => this.props.changeBudget(this.state.changeOptions)} className="btn btn-primary">
-                        Submit
+                    <button 
+                        type="button" 
+                        onClick={() => onSubmit(changeOptions)} 
+                        className="btn btn-primary"
+                    >
+                    Submit
                     </button>
                 </form>
             </div>

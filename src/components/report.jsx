@@ -118,7 +118,7 @@ class Report extends ListGroup {
             <Pagination
                 pageItems={pageItems}
                 dataLength={dataLength}
-                onPageChange={this.onPageChange}
+                onPageChange={this.handlePageEvent}
                 currentPage={currentPage}
             />
         </div> );
