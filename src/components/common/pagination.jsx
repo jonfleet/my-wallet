@@ -13,17 +13,16 @@ const Pagination = (props) => {
 
     return ( 
         <ul className="pagination">
-            <li className="page-item"><a href="#" onClick={()=> onPageChange(currentPage === 0 ? currentPage : currentPage - 1)} className="page-link">Previous</a></li>
+            <li key="previous" className="page-item"><button onClick={()=> onPageChange(currentPage === 0 ? currentPage : currentPage - 1)} className="page-link">Previous</button></li>
             {pageNumbers.map(page => 
-                <li className={currentPage === page ? "page-item active" : "page-item"}>
-                    <a 
-                    href="#" 
+                <li key={page} className={currentPage === page ? "page-item active" : "page-item"}>
+                    <button  
                     onClick={() => onPageChange(page)} 
                     className="page-link">{page + 1}
-                    </a>
+                    </button>
                 </li>
             )}
-            <li className="page-item"><a href="#" onClick={() => onPageChange(currentPage >= pageNumbers.length -1 ? currentPage : currentPage + 1 )} className="page-link">Next</a></li>
+            <li key="next" className="page-item"><button onClick={() => onPageChange(currentPage >= pageNumbers.length -1 ? currentPage : currentPage + 1 )} className="page-link">Next</button></li>
         </ul>
      );
 }

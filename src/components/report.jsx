@@ -1,64 +1,67 @@
+import { number } from 'joi';
 import React, { Component } from 'react';
-import {getReports} from '../services/getReport'
+import {getReport} from '../services/reportService'
 import ListGroup from "./common/listGroup"
 import Pagination from "./common/pagination"
 
-class Report extends Component {
+class Report extends ListGroup {
     state = {
         data: [],
         months: [
-            {label: "All Months", name: ""},
-            {label: "April", name: "april"},
-            {label: "May", name: "may"},
-            {label: "June", name: "june"},
-            {label: "July", name: "july"}
+            { _id: 0, name: "Select", status: true},
+            { _id: 1, name: "January", status: false},
+            { _id: 2, name: "February", status: false},
+            { _id: 3, name: "March", status: false},
+            { _id: 4, name: "April", status: false},
+            { _id: 5, name: "May", status: false},
+            { _id: 6, name: "June", status: false},
+            { _id: 7, name: "July", status: false},
+            { _id: 8, name: "August", status: false},
+            { _id: 9, name: "September", status: false},
+            { _id: 10, name: "October", status: false},
+            { _id: 11, name: "November", status: false},
+            { _id: 12, name: "December", status: false},
         ],
-        selectedMonth: "",
+        activeMonth: 1,
         pageItems: 3,
         currentPage: 0,
         dataLength: null,
         token: localStorage.jwt,
     }
-    
-    // {key: 1, 
-    //     description: "Aldi", 
-    //     category: "Groceries", 
-    //     date: "4/4/2020", 
-    //     amount: "$35", 
-    //     account: "Amex"
-    //     }
-    onPageChange = (page) => {
+
+    // Event Handlers
+
+    handleChangeEvent = month => {
+        this.setState( {activeMonth : month })
+        this.setState({currentPage: 0})
+        // console.log(this.state.activeMonth)
+    }
+    handlePageEvent = (page) => {
         // console.log('Current Page: ', page)
         this.setState({currentPage: page})
     }
 
+    // Hooks
     async componentDidMount(){
-        const {data} = await getReports()
+        const { data } = await getReport()
         const dataLength = data.length
         this.setState({data})
         this.setState({dataLength})
+        const months = this.groupItemStatus()
+        // console.log("New Months: ", months)
+        this.setState({months})
     }
 
-    handleMonthSelect = month => {
-        // console.log("State Month: ",month.label)
-        this.setState( {selectedMonth : month })
-        this.setState({currentPage: 0})
-    }
-    handleDataEntry = () => {
-        let entryKey = this.state.tableData.length
-        entryKey++
-        // console.log(entryKey)
-        const data = {
-            key: entryKey, 
-            description: "Gutair Strings", 
-            category: "Entertainment", 
-            date: "4/7/2020", 
-            amount: "$203", 
-            account: "Amex" 
-        };
-        let tableData = this.state.tableData
-        tableData.push(data)
-        this.setState({ tableData })
+
+    // Pagination 
+    filterData(){
+        const {activeMonth, data, months } = this.state
+        let numberMonth = activeMonth
+        if(activeMonth === 0){
+            numberMonth += 1
+        }
+        const filtered = data.filter(item => item.month === months[numberMonth].name);
+        return filtered
     }
 
     paginate(pageItems, currentPage, data ){
@@ -71,25 +74,21 @@ class Report extends Component {
     }
 
     render() { 
-        const {data, months, selectedMonth, pageItems, currentPage} = this.state
-        // console.log("Selected Month:" , selectedMonth)
-        
-        // console.log("Local Storage: ", localStorage )
-        
-        const filtered = selectedMonth.length !== 0 
-            ? data.filter(item => item.date.toLowerCase() === selectedMonth) 
-            : data;
-        // console.log("filtered: ", filtered)
+        const { activeMonth, pageItems, currentPage, months, data} = this.state
+        // console.log("Selected Month:" , activeMonth)
+        const filtered = this.filterData()
+        // console.log(filtered)
         const dataLength = filtered.length;
         const paginated = this.paginate(pageItems, currentPage, filtered)
+        
         return ( 
         <div className="m-2">
            <ListGroup 
             items={months} 
-            onItemSelect={this.handleMonthSelect}
-            activeClass={selectedMonth}
-            keyProperty="name"
-            valueProperty="label"
+            onItemSelect={this.handleChangeEvent}
+            activeClass={activeMonth}
+            keyProperty="_id"
+            valueProperty="name"
             
             />
             <div className="table-responsive">
@@ -108,7 +107,7 @@ class Report extends Component {
                         <tr key={entry._id}>
                             <td>{entry.description}</td>
                             <td>{entry.category}</td>
-                            <td>{entry.date}</td>
+                            <td>{entry.month} {entry.day} {entry.year}</td>
                             <td>{entry.amount}</td>
                             <td>{entry.account}</td>
                         </tr>

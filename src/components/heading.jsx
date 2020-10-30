@@ -30,13 +30,13 @@ class Heading extends Component {
                 {!user && (               
                     <React.Fragment>
                         <NavLink className="navbar-brand ml-auto" to="/login"><h6>Login</h6></NavLink>
-                        <NavLink className="navbar-brand" to="/sign-up"><h6><a onClick={this.signOut}></a>Register</h6></NavLink>
+                        <NavLink className="navbar-brand" to="/sign-up"><h6>Register</h6></NavLink>
                     </React.Fragment>
                 )}
                 {user && (               
                     <React.Fragment>
                         <NavLink className="navbar-brand ml-auto" to="/profile"><h6>{user.username}</h6></NavLink>
-                        <NavLink className="navbar-brand" to="/logout"><h6><a onClick={this.signOut}>Sign Out</a></h6></NavLink>
+                        <NavLink className="navbar-brand" to="/logout" onClick={this.signOut}><h6>Sign Out</h6></NavLink>
                     </React.Fragment>
                 )}
             </nav>

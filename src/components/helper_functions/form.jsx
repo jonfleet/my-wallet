@@ -14,10 +14,10 @@ class Form extends Component {
         // console.log("Result Object, ", result)
         const errors = {} 
         if(!result.error) return {};
-        result.error.details.map(item => {
+        result.error.details.map(item => (
           // console.log(item.path[0])
           errors[item.path[0]] = item.message
-        })
+        ))
         // console.log("Errors object: ", errors)
         
         return errors
@@ -26,7 +26,6 @@ class Form extends Component {
  
     doSubmit = async (apiCall) => {
         // Call Server
-        const {data} = this.state
         // console.log("Waiting for login call")
         try{
           const response = await apiCall

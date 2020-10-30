@@ -1,13 +1,12 @@
 import React, {Component} from 'react';
-import {Switch, Route, Redirect, useParams, useRouteMatch } from 'react-router-dom'
+import {Switch, Route, useRouteMatch } from 'react-router-dom'
 
 // Components
 import Sidebar from './sidebar'
-import Reports from './reports'
+import Reports from './report'
 import Expense from "./expense"
 import Budget from "./budget"
 import Dashboard from './dashboard'
-import Login from "./common/loginForm"
 import NotFound from './not-found'
 
 
@@ -15,7 +14,7 @@ import NotFound from './not-found'
 
 const MainElement = () => {
     // const {url, path} = useParams()
-    const {path, url} = useRouteMatch()
+    const { url} = useRouteMatch()
     // console.log("URL: ", url);
     // const name = url.substr(1, url.length-1)
     // console.log(name)
@@ -42,21 +41,9 @@ const MainElement = () => {
       );
 }
 
-// let {path, url } = useRouteMatch();
-
 class Main extends Component {
-    state = { 
-        menuOptions: [
-            {id: 1, element: <Dashboard key="dashboard"/> , path: "/dashboard", exact: false},
-            {id: 2, element: <Reports key="report" />, path: "/reports", exact: false},
-            {id: 3, element: <Expense key="expense"/>, path: "/add-expenses", exact: false},
-            {id: 4, element: <Budget key="budget"/>, path:"/budget", exact: false},
-            {id: 5, element: <NotFound key="not-found"/>, path:"/not-found", exact: false},
-        ]
-     }      
-
+          
     render() { 
-        const {menuOptions} = this.state
         // let {mainTopicId } = useParams();
         // console.log("ID: ", mainTopicId)
         // let {path} = useRouteMatch();

@@ -1,7 +1,6 @@
 import http from "./httpService"
-import config from "../config.json"
 import jwt_decode from "jwt-decode"
-import axios from "axios"
+
 
 const tokenKey = "jwt"
 // const apiEndpoint = config.apiEndpoint + "/auth"

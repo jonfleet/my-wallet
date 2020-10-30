@@ -4,7 +4,7 @@ class BudgetForm extends Component {
     state = {
         changeOptions : {
             Category: "",
-            amount: null,
+            amount: undefined,
         }   
     }
 
@@ -27,10 +27,10 @@ class BudgetForm extends Component {
                     <div className="input-group mb-3 w-50">
                         
                         <div className="input-group-prepend">
-                            <label className="input-group-text" htmlfor="inputGroupSelect01">Category</label>
+                            <label className="input-group-text" htmlFor="inputGroupSelect01">Category</label>
                         </div>
                         <select name="category" value={this.state.changeOptions.category} onChange={this.handleChange}className="custom-select" id="inputGroupSelect01">
-                            <option selected>Choose...</option>
+                            <option >Choose...</option>
                             <option value="groceries">Groceries</option>
                             <option value="entertainment">Entertainment</option>
                             <option value="travel">Travel</option>

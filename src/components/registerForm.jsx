@@ -1,7 +1,6 @@
 import React from 'react';
 import Form from "./helper_functions/form"
 import Input from "./common/input"
-import config from "../config.json"
 
 // Services
 import User from "../services/userService"
@@ -50,7 +49,7 @@ class RegisterForm extends Form {
 
   render() { 
     const {data, errors } = this.state
-    console.log("Render Errors: ", errors)
+    // console.log("Render Errors: ", errors)
     return (  
       <form onSubmit={this.handleSubmit} className="container w-25 mt-5">
           <div className="text-center mb-4">

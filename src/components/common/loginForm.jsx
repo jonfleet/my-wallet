@@ -2,7 +2,6 @@ import React from 'react';
 import Form from "../helper_functions/form"
 import _ from "lodash"
 import Joi from "joi"
-import config from "../../config.json"
 import Input from "./input"
 import NewUser from '../newUser'
 import auth from "../../services/authService"
