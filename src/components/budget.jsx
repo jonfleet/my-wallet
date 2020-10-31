@@ -62,18 +62,11 @@ class Budget extends ListGroup {
 
     // Modify Budget Table
     changeTable = changeOptions => {
-        var newBudget = [...this.state.budget]
-        console.log("clone", newBudget)
-        for (let i = 0; i < newBudget.length; i++ ){
-            console.log("a")
-            if(newBudget[i].category == changeOptions.category) {
-                newBudget[i] = {category: changeOptions.category, budget : changeOptions.amount, spent: 0}
-                console.log(newBudget)
-                return
-            }    
-        }
+        const newBudget = [...this.state.budget]
         
-        // console.log("Parent Change Options: ", changeOptions)
+        const index = this.state.budget.findIndex(item => item.category == changeOptions.category)
+        newBudget[index]  = {...newBudget[index], budget: changeOptions.amount, spent: 0 }
+        
         this.setState({budget : newBudget})
     }
 

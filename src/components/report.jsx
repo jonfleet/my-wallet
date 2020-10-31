@@ -1,5 +1,4 @@
-import { number } from 'joi';
-import React, { Component } from 'react';
+import React from 'react';
 import {getReport} from '../services/reportService'
 import ListGroup from "./common/listGroup"
 import Pagination from "./common/pagination"
