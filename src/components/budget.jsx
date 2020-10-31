@@ -62,9 +62,10 @@ class Budget extends ListGroup {
 
     // Modify Budget Table
     changeTable = changeOptions => {
-        const newBudget = [...this.state.budget]
-        
-        const index = this.state.budget.findIndex(item => item.category == changeOptions.category)
+        const {budget } = this.state
+        const newBudget = [...budget]
+
+        const index = newBudget.findIndex(item => item.category == changeOptions.category)
         newBudget[index]  = {...newBudget[index], budget: changeOptions.amount, spent: 0 }
         
         this.setState({budget : newBudget})
