@@ -1,18 +1,19 @@
 import React, { Component } from 'react';
 import {postExpense} from "../services/postExpense"
 import {getCurrentUser} from "../services/authService"
+
 // Put Selected values in the account placholder $XX.XX
 
 class Expense extends Component {
     state = { 
         userId: "",
-        description: "",
-        category: "",
-        day: "",
-        month: "", 
-        year : "",
-        amount: "",
-        account: "",
+        description: "test",
+        category: "groceries",
+        day: "1",
+        month: "january", 
+        year : "2020",
+        amount: "10",
+        account: "visa",
      }
 
     componentDidMount() {
@@ -21,11 +22,11 @@ class Expense extends Component {
     }
 
     handleChange = ({currentTarget : input}) => {
-        // console.log(this.state)
         const state = {...this.state}
+        
         state[input.name] = input.value
         this.setState(state)
-        // console.log(this.state.entry)
+        console.log(this.state)
     }
         
     render() { 
@@ -78,12 +79,13 @@ class Expense extends Component {
                         </div>
                         <div className="col-4">
                             <label>Month</label>
-                            <select className="custom-select" id="CategoryAddExpense" type="text" name="month" value={month} onChange={this.handleChange}>
+                            <input type="text" className="form-control" value={month} placeholder="Month.." name="month" onChange={this.handleChange} id="CategoryAddExpense"/>
+                            {/* <select className="custom-select" id="CategoryAddExpense" type="month" name="month" value={month} onChange={this.handleChange}>
                                 <option>Month</option>
                                 {months.map(month => (
                                     <option value={month}>{month}</option>
                                 ))}
-                            </select>
+                            </select> */}
                             {/* <input name="month" value={month} onChange={this.handleChange} type="text" className="form-control" placeholder="MM"></input> */}
                         </div>
                         <div className="col">
@@ -99,7 +101,7 @@ class Expense extends Component {
                     </div>
                     <div className="form-group">
                         <label>Amount</label>
-                        <input name="amount" value={amount} onChange={this.handleChange} type="email" className="form-control" id="exampleFormControlInput1" placeholder="$XXX.XX"></input>
+                        <input name="amount" value={amount} onChange={this.handleChange} type="number" className="form-control" id="exampleFormControlInput1" placeholder="$XXX.XX"></input>
                     </div>
                     <div className="form-group">
                         <label htmlFor="AccountAddExpense" >Account</label>

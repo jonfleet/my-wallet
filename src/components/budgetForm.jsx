@@ -1,24 +1,53 @@
 import React, {Component} from 'react';
 
+
 class BudgetForm extends Component {
     state = {
         changeOptions : {
             category: undefined,
-            amount: null,
-        }   
+            amount: undefined,
+            activeMonth: undefined,
+            activeYear: undefined
+        },
+        months: [
+            'january',
+            'february',
+            'march',
+            'april',
+            'may',
+            'june',
+            'july',
+            'august',
+            'september',
+            'october',
+            'november',
+            'december'
+        ]   
     }
 
-    handleChange = ({currentTarget: input}) => {
+    handleChange = async ({currentTarget: input}) => {
+        const {activeMonth, activeYear} = this.props
+        const {months } = this.state
+        
         const changeOptions = {...this.state.changeOptions}
+        changeOptions.activeMonth = months[activeMonth-1]
+        changeOptions.activeYear = activeYear
         changeOptions[input.name] = input.value;
+        // await changeBudget(changeOptions)
         this.setState({changeOptions})
         // console.log(this.state.changeOptions)
+        
+        // console.log("state" ,this.state)
+
+        
     }
 
     render() { 
         const {onSubmit} = this.props
         const {changeOptions} = this.state
-        console.log(changeOptions)
+        
+        // console.log(activeMonth)
+
         return (
             <div className="container mt-3">
                 <form action="">
@@ -43,12 +72,12 @@ class BudgetForm extends Component {
                             id="inputGroupSelect01"
                             >
                             <option >Choose...</option>
-                            <option value="Groceries">Groceries</option>
-                            <option value="Entertainment">Entertainment</option>
-                            <option value="Travel">Travel</option>
-                            <option value="Rent">Rent</option>
-                            <option value="Utilities">Utilities</option>
-                            <option value="Dining">Dining</option>
+                            <option value="groceries">Groceries</option>
+                            <option value="entertainment">Entertainment</option>
+                            <option value="travel">Travel</option>
+                            <option value="rent">Rent</option>
+                            <option value="utilities">Utilities</option>
+                            <option value="dining">Dining</option>
                         </select>
                     </div>
                     <div className="form-group w-25">

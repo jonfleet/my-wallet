@@ -2,7 +2,8 @@ import React from 'react';
 
 const BudgetTable = (props) => {
     // console.log("Props: ", props)
-    const {items} = props
+    const {data} = props
+    
     return (
         <table className="table w-25">
             <thead className="thead-light">
@@ -13,13 +14,13 @@ const BudgetTable = (props) => {
                 </tr>
             </thead>
             <tbody>
-                {items.map(item => (
+                {data ? data.map(item => (
                     <tr key={item.category}>
                         <td>{item.category}</td>
                         <td>{item.spent}</td>
                         <td>{item.budget}</td>
                     </tr>
-                ))}
+                )): null}
             </tbody>
         </table>
       );

@@ -7,19 +7,19 @@ class Report extends ListGroup {
     state = {
         data: [],
         months: [
-            { _id: 0, name: "Select", status: true},
-            { _id: 1, name: "January", status: false},
-            { _id: 2, name: "February", status: false},
-            { _id: 3, name: "March", status: false},
-            { _id: 4, name: "April", status: false},
-            { _id: 5, name: "May", status: false},
-            { _id: 6, name: "June", status: false},
-            { _id: 7, name: "July", status: false},
-            { _id: 8, name: "August", status: false},
-            { _id: 9, name: "September", status: false},
-            { _id: 10, name: "October", status: false},
-            { _id: 11, name: "November", status: false},
-            { _id: 12, name: "December", status: false},
+            { _id: 0, name: "select", label: "Select", status: true},
+            { _id: 1, name: "january", label: "January", status: false},
+            { _id: 2, name: "february", label: "February", status: false},
+            { _id: 3, name: "march", label: "March", status: false},
+            { _id: 4, name: "april", label: "April", status: false},
+            { _id: 5, name: "may", label: "May", status: false},
+            { _id: 6, name: "june", label: "June", status: false},
+            { _id: 7, name: "july", label: "July", status: false},
+            { _id: 8, name: "august", label: "August", status: false},
+            { _id: 9, name: "september", label: "September", status: false},
+            { _id: 10, name: "october", label: "October", status: false},
+            { _id: 11, name: "november", label: "November", status: false},
+            { _id: 12, name: "december", label: "December", status: false},
         ],
         activeMonth: 1,
         pageItems: 3,
@@ -46,10 +46,13 @@ class Report extends ListGroup {
         const dataLength = data.length
         this.setState({data})
         this.setState({dataLength})
-        const months = this.groupItemStatus()
-        // console.log("New Months: ", months)
-        this.setState({months})
+        const newMonths = this.groupItemStatus()
+        this.setState({months: newMonths})
+        
+        // this.setState({months})
     }
+
+    
 
 
     // Pagination 
@@ -72,22 +75,26 @@ class Report extends ListGroup {
         return paginatedData
     }
 
+    
+
     render() { 
         const { activeMonth, pageItems, currentPage, months, data} = this.state
         // console.log("Selected Month:" , activeMonth)
+        const newMonths = this.groupItemStatus()
+        console.log("newMonths: ", newMonths)
         const filtered = this.filterData()
-        // console.log(filtered)
+        // console.log(data)
         const dataLength = filtered.length;
         const paginated = this.paginate(pageItems, currentPage, filtered)
         
         return ( 
         <div className="m-2">
            <ListGroup 
-            items={months} 
+            items={newMonths} 
             onItemSelect={this.handleChangeEvent}
             activeClass={activeMonth}
             keyProperty="_id"
-            valueProperty="name"
+            valueProperty="label"
             
             />
             <div className="table-responsive">

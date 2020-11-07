@@ -12,7 +12,6 @@ class ListGroup extends Component {
     
     groupItemStatus = () => {
         const {data, months} = this.state
-        // console.log("Budget Data: ", data)
         const newMonths = [...months]
         for(let i = 0; i < data.length; i++)  {
             for(let j = 1; j < months.length; j++){
@@ -26,6 +25,7 @@ class ListGroup extends Component {
 
     render() { 
         const {items, valueProperty, keyProperty, onItemSelect } = this.props
+        // console.log("Items",items)
         let {activeClass} = this.props
         // onItemSelect(items[0].key)
         // console.log("value Property:", valueProperty)
