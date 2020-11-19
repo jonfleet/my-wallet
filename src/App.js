@@ -14,7 +14,7 @@ import Profile from "./components/profile"
 import Logout from "./components/logout"
 
 class App extends Component {
- 
+  state = {}
   componentDidMount () {
     const user = auth.getCurrentUser()
     this.setState({user})  
