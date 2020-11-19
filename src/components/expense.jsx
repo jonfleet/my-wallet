@@ -128,7 +128,7 @@ class Expense extends Form {
         
         return ( 
             <div className="m-2">
-                <p className="h1"><span className="badge badge-pill badge-success">New Expense</span></p> 
+                <p className="h1"><span className="badge badge-pill badge-success">Add Expense</span></p> 
                 {/* <form onSubmit={() => postExpense(this.state)} className="m-2 w-50"> */}
                 <form onSubmit={this.handleSubmit} className="mt-4 w-50">
                     <div className="form-group">
