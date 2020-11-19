@@ -1,105 +1,125 @@
-import React, {Component} from 'react';
+import React from 'react';
+import Form from "./helper_functions/form"
+import Joi from "joi"
+import _ from "lodash"
+import Input from "./common/input"
+import DropDownInput from "./common/dropDownInput"
 
-
-class BudgetForm extends Component {
+class BudgetForm extends Form {
     state = {
-        changeOptions : {
+        data : {
             category: undefined,
             amount: undefined,
             activeMonth: undefined,
             activeYear: undefined
         },
+        categories : [
+            {name: "groceries", label : "Groceries"},
+            {name: "entertainment", label : "Entertainment"},
+            {name: "travel", label: "Travel"},
+            {name: "rent", label: "Rent"},
+            {name: "utilities", label: "Utilities"},
+            {name: "dining", label: "Dining"},
+        ],
         months: [
-            'january',
-            'february',
-            'march',
-            'april',
-            'may',
-            'june',
-            'july',
-            'august',
-            'september',
-            'october',
-            'november',
-            'december'
-        ]   
+            {name: "january", label: "January"},
+            {name: "february", label :"February"},
+            {name: "march", label: "March"},
+            {name:"april", label: "April"},
+            {name: "june", label :"June"}, 
+            {name: "july", label :"July"},
+            {name: "august", label :"August"},
+            {name: "may", label :"May"}, 
+            {name: "september", label : "September"},
+            {name: "october", label :"October"},
+            {name: "november", label : "November"},
+            {name: "december", label :"December"}
+        ],
+        schema : Joi.object({
+           category: Joi.string().required().min(1).max(14).label("Category"),
+           amount: Joi.number().required().min(0).max(10000).label("Amount"),
+           activeMonth: Joi.string().required().label("Month"),
+           activeYear: Joi.number().required().min(2020).max(2100).label("Year")
+        }),
+        errors : {}   
     }
 
-    handleChange = async ({currentTarget: input}) => {
-        const {activeMonth, activeYear} = this.props
-        const {months } = this.state
-        
-        const changeOptions = {...this.state.changeOptions}
-        changeOptions.activeMonth = months[activeMonth-1]
-        changeOptions.activeYear = activeYear
-        changeOptions[input.name] = input.value;
-        // await changeBudget(changeOptions)
-        this.setState({changeOptions})
-        // console.log(this.state.changeOptions)
-        
-        // console.log("state" ,this.state)
+    handleBudgetChange = async ({currentTarget: input}) => {
+        const {
+            activeMonth, 
+            activeYear, 
+            years, 
+            months
+        } = this.props
 
+        if(months.length !== 0 && years.length !==0 && activeMonth >=0 ){
+            const data = {...this.state.data}
+            
+            data.activeMonth = months[activeMonth].name
+            data.activeYear = years[activeYear].name
+            data[input.name] = input.value;
+        
+            this.setState({data})
+        }
+        
+    }
+
+    handleSubmit = (e) => {
+        e.preventDefault()
+        const {onSubmit} = this.props
+        const {data} = this.state
+        const errors = this.validateProperty()
+        
+        this.setState({errors})
+        
+        if(_.isEmpty(errors)){
+            onSubmit(data)
+        }
         
     }
 
     render() { 
-        const {onSubmit} = this.props
-        const {changeOptions} = this.state
-        
-        // console.log(activeMonth)
+        const {activeMonth} = this.props
+        const {
+            data, 
+            categories, 
+            errors
+        } = this.state
 
         return (
-            <div className="container mt-3">
-                <form action="">
-                    <div className="m-2">
-                        <h2>Change Budget</h2>
-                    </div>
-                    <div className="input-group mb-3 w-50">
-                        
-                        <div className="input-group-prepend">
-                            <label 
-                                className="input-group-text" 
-                                htmlFor="inputGroupSelect01"
-                            >
-                            Category
-                            </label>
+            <div >
+                <form onSubmit={this.handleSubmit}>
+                    
+                    <h1><div className="badge badge-pill badge-success">Change Budget</div></h1>
+                    <div className="container">
+                        <div className="input-group mb-3 w-50">
+                            <DropDownInput 
+                                label="Category"
+                                name="category"
+                                value={data.value}
+                                options={categories}
+                                optionLabel="Choose..."
+                                onChange={this.handleBudgetChange}
+                                errors={errors}
+                            />
                         </div>
-                        <select 
-                            name="category" 
-                            value={this.state.changeOptions.category} 
-                            onChange={this.handleChange}
-                            className="custom-select" 
-                            id="inputGroupSelect01"
-                            >
-                            <option >Choose...</option>
-                            <option value="groceries">Groceries</option>
-                            <option value="entertainment">Entertainment</option>
-                            <option value="travel">Travel</option>
-                            <option value="rent">Rent</option>
-                            <option value="utilities">Utilities</option>
-                            <option value="dining">Dining</option>
-                        </select>
+                        <div className="form-group w-25">
+                            <Input 
+                                label="Budgeted Amount"
+                                name="amount"
+                                value={data.amount}
+                                onChange={this.handleBudgetChange}
+                                errors={errors}
+                                type="number"
+                            />
+                        </div>
+                        <button 
+                            type="submit" 
+                            className="btn btn-primary" 
+                            disabled={activeMonth >= 0 ? false : true}
+                        >Submit
+                        </button>
                     </div>
-                    <div className="form-group w-25">
-                        <label>Budgeted Amount</label>
-                        <input 
-                         name="amount" 
-                         value={this.state.changeOptions.amount} 
-                         onChange={this.handleChange} 
-                         type="number" 
-                         className="form-control"
-                         id="exampleFormControlInput1" 
-                         placeholder="$_.__"
-                        >
-                        </input>
-                    </div>
-                    <button 
-                        type="button" 
-                        onClick={() => onSubmit(changeOptions)} 
-                        className="btn btn-primary"
-                    >
-                    Submit
-                    </button>
                 </form>
             </div>
         );

@@ -1,121 +1,215 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {postExpense} from "../services/postExpense"
 import {getCurrentUser} from "../services/authService"
 
+import Joi from "joi"
+import _ from "lodash"
+
+import Input from "./common/input"
+import DropDownInput from "./common/dropDownInput"
+import Form from "./helper_functions/form"
+
 // Put Selected values in the account placholder $XX.XX
 
-class Expense extends Component {
+class Expense extends Form {
     state = { 
-        userId: "",
-        description: "test",
-        category: "groceries",
-        day: "1",
-        month: "january", 
-        year : "2020",
-        amount: "10",
-        account: "visa",
+        data : {
+            userId: "",
+            description: "",
+            category: "",
+            day: "",
+            month: "", 
+            year : "",
+            amount: "",
+            account: "",
+        },
+        dataLabel: {
+            userId: "",
+            description: "",
+            category: "",
+            day: "",
+            month: "",
+            year: "",
+            amount: "",
+            account: ""
+        },
+        schema : Joi.object({
+            userId: Joi.string().required().label("UserId"),
+            description: Joi.string().min(1).max(200).required().label("Description"),
+            category : Joi.string().min(1).max(20).required().label("Category"),
+            day: Joi.number().min(1).max(2).required().label("Day"),
+            month: Joi.string().min(1).max(9).required().label("Month"),
+            year: Joi.number().required().min(2020).max(2100).label("Year"),
+            amount: Joi.number().min(1).max(100000).required().label("Amount"),
+            account: Joi.string().min(1).max(16).required().label("Account")
+        }),
+        errors: {},
+        categories : [
+            {name: "groceries", label : "Groceries"},
+            {name: "entertainment", label : "Entertainment"},
+            {name: "travel", label: "Travel"},
+            {name: "rent", label: "Rent"},
+            {name: "utilities", label: "Utilities"},
+            {name: "dining", label: "Dining"},
+        ],
+        days : [
+            {name: 1, label: "1"},
+            {name: 2, label: "2"},
+            {name: 3, label: "3"},
+            {name: 4, label: "4"},
+            {name: 5, label: "5"},
+            {name: 6, label: "6"},
+            {name: 7, label: "7"},
+        ],
+        months: [
+            {name: "january", label: "January"},
+            {name: "february", label :"February"},
+            {name: "march", label: "March"},
+            {name:"april", label: "April"},
+            {name: "june", label :"June"}, 
+            {name: "july", label :"July"},
+            {name: "august", label :"August"},
+            {name: "may", label :"May"}, 
+            {name: "september", label : "September"},
+            {name: "october", label :"October"},
+            {name: "november", label : "November"},
+            {name: "december", label :"December"}
+        ],
+        years :[
+            {name: 2020, label: "2020"},
+            {name: 2021, label: "2021"},
+            {name: 2022, label: "2022"},
+            {name: 2023, label: "2023"}
+        ], 
+        accounts : [
+            {name: "Visa" , label: "Visa"},
+            {name: "American Express", label: "American Express"},
+            {name: "Discover", label: "Discover"},
+            {name: "Mastercard", label: "Mastercard"},
+        ]
      }
 
     componentDidMount() {
         const { _id } = getCurrentUser()
-        this.setState({userId: _id })
+        const data = {...this.state.data}
+        data.userId = _id
+        this.setState({data})
     }
 
-    handleChange = ({currentTarget : input}) => {
-        const state = {...this.state}
+    handleSubmit = (e) => {
+        e.preventDefault();
+        const {data} = this.state
+        const errors = this.validateProperty()
+        this.setState({errors})
         
-        state[input.name] = input.value
-        this.setState(state)
-        console.log(this.state)
+        if(_.isEmpty(errors)){
+            postExpense(data)
+        }
     }
         
     render() { 
-        const { description, category, day, month, year, amount, account } = this.state;
-        const months = [
-            "January",
-            "February",
-            "March",
-            "April",
-            "May", 
-            "June", 
-            "July", 
-            "August",
-            "September",
-            "October",
-            "November",
-            "December"
-        ]
-        const years = [2020,2021,2022,2023,2024]
+        const { 
+            categories,  
+            days, 
+            months, 
+            years, 
+            accounts, 
+            errors, 
+        } = this.state;
+
+        const { description, 
+                category, 
+                day,
+                month, 
+                year, 
+                amount, 
+                account
+        } = this.state.data 
+        
         return ( 
             <div className="m-2">
-                <h1>Add Expense</h1> 
-                <form className="m-2 w-50">
+                <p className="h1"><span className="badge badge-pill badge-success">New Expense</span></p> 
+                {/* <form onSubmit={() => postExpense(this.state)} className="m-2 w-50"> */}
+                <form onSubmit={this.handleSubmit} className="mt-4 w-50">
                     <div className="form-group">
-                        <label>Description</label>
-                        <input name="description" value={description} onChange={this.handleChange} type="email" className="form-control" id="exampleFormControlInput1"></input>
+                        <Input 
+                            label="Description"
+                            name="description"
+                            value={description}
+                            onChange={this.handleChange}
+                            errors={errors}
+                            type="text"
+                        />
                     </div>
                     <div className="mb-3">
-                        <label htmlFor="CategoryAddExpense">Category</label>
-                        <select className="custom-select" id="CategoryAddExpense" name="category" value={category} onChange={this.handleChange}>
-                            <option >Choose...</option>
-                            <option value="groceries">Groceries</option>
-                            <option value="entertainment">Entertainment</option>
-                            <option value="travel">Travel</option>
-                            <option value="rent">Rent</option>
-                            <option value="utilities">Utilities</option>
-                            <option value="dining">Dining</option>
-                        </select>
+                        <DropDownInput 
+                            label="Category"
+                            name="category"
+                            value={category}
+                            options={categories}
+                            optionLabel="Choose..."
+                            onChange={this.handleChange}
+                            errors={errors}
+                        />
                     </div>
                     <div className="form-row">
                         <div className="col-2">
-                            <label>Day</label>
-                            <select className="custom-select" id="CategoryAddExpense" type="number" name="day" value={day} onChange={this.handleChange}>
-                                <option>DD</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                            </select>
-                            {/* <input name="day" value={day} onChange={this.handleChange} type="number" className="form-control" placeholder="DD"></input> */}
+                            <DropDownInput 
+                                label="Day"
+                                name="day"
+                                value={day}
+                                options={days}
+                                optionLabel="Day"
+                                onChange={this.handleChange}
+                                errors={errors}
+                            />
                         </div>
                         <div className="col-4">
-                            <label>Month</label>
-                            <input type="text" className="form-control" value={month} placeholder="Month.." name="month" onChange={this.handleChange} id="CategoryAddExpense"/>
-                            {/* <select className="custom-select" id="CategoryAddExpense" type="month" name="month" value={month} onChange={this.handleChange}>
-                                <option>Month</option>
-                                {months.map(month => (
-                                    <option value={month}>{month}</option>
-                                ))}
-                            </select> */}
-                            {/* <input name="month" value={month} onChange={this.handleChange} type="text" className="form-control" placeholder="MM"></input> */}
+                            <DropDownInput 
+                                label="Month"
+                                name="month"
+                                value={month}
+                                options={months}
+                                optionLabel="Month"
+                                onChange={this.handleChange}
+                                errors={errors}
+                            />
                         </div>
                         <div className="col">
-                            <label>Year</label>
-                            <select className="custom-select" id="CategoryAddExpense" type="number" name="year" value={year} onChange={this.handleChange}>
-                                <option>YYYY</option>
-                                {years.map(year => (
-                                    <option value={year}>{year}</option>
-                                ))}
-                            </select>
-                            {/* <input name="year" value={year} onChange={this.handleChange} type="number" className="form-control" placeholder="YYYY"></input> */}
+                            <DropDownInput 
+                                label="Year"
+                                name="year"
+                                value={year}
+                                options={years}
+                                optionLabel="Year"
+                                onChange={this.handleChange}
+                                errors={errors}
+                            />
                         </div>
                     </div>
                     <div className="form-group">
-                        <label>Amount</label>
-                        <input name="amount" value={amount} onChange={this.handleChange} type="number" className="form-control" id="exampleFormControlInput1" placeholder="$XXX.XX"></input>
+                        <Input 
+                            label="Amount"
+                            name="amount"
+                            value={amount}
+                            onChange={this.handleChange}
+                            errors={errors}
+                            type="number"
+                        />
                     </div>
                     <div className="form-group">
-                        <label htmlFor="AccountAddExpense" >Account</label>
-                        {/* <input name="account" value={account} onChange={this.handleChange} type="email" className="form-control" id="exampleFormControlInput1"></input> */}
-                        <select className="custom-select" id="AccountAddExpense" name="account" value={account} onChange={this.handleChange}>
-                            <option >Choose...</option>
-                            <option value="Visa">Visa</option>
-                            <option value="AmericanExpress">American Express</option>
-                            <option value="Discover">Discover</option>
-                            <option value="Mastercard">Mastercard</option>
-                        </select>
+                        <DropDownInput 
+                                label="Account"
+                                name="account"
+                                value={account}
+                                options={accounts}
+                                optionLabel="Account"
+                                onChange={this.handleChange}
+                                errors={errors}
+                        />
                     </div>
+                    <button className="btn btn-primary">Add</button>
                 </form>
-                <button onClick={() => postExpense(this.state)} className="btn btn-primary">Add Expense</button>
             </div>
          );
     }

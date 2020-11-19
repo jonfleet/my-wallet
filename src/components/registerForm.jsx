@@ -24,8 +24,7 @@ class RegisterForm extends Form {
       }),
       password: Joi.string().required().label("Password").messages({
         "string.empty" : "Password is required"
-      }),
-      // Add When Statements to Validation String 
+      }), 
       confirmPassword: Joi.string().required().valid(Joi.ref('password')).messages({
         "any.only": "Passwords do not match",
         "string.empty": "Field is required"
@@ -38,10 +37,9 @@ class RegisterForm extends Form {
     e.preventDefault()
 
     const errors = this.validateProperty() 
-    // console.log('Result Object: ', errors)
 
     this.setState({errors})
-    // console.log("Errors: ", errors)
+    
     if(_.isEmpty(errors)){
         this.doSubmit(User.createUser(this.state.data))
     }
@@ -49,11 +47,14 @@ class RegisterForm extends Form {
 
   render() { 
     const {data, errors } = this.state
-    // console.log("Render Errors: ", errors)
+  
     return (  
       <form onSubmit={this.handleSubmit} className="container w-25 mt-5">
           <div className="text-center mb-4">
-            <FontAwesomeIcon className="fa-5x" icon={faClipboardList} />
+            <FontAwesomeIcon 
+                className="fa-5x" 
+                icon={faClipboardList}
+            />
             <h1 className="h3 mb-3 font-weight-normal">Register</h1>
           </div>
           

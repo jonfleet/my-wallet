@@ -5,97 +5,94 @@ import Pagination from "./common/pagination"
 
 class Report extends ListGroup {
     state = {
-        data: [],
-        months: [
-            { _id: 0, name: "select", label: "Select", status: true},
-            { _id: 1, name: "january", label: "January", status: false},
-            { _id: 2, name: "february", label: "February", status: false},
-            { _id: 3, name: "march", label: "March", status: false},
-            { _id: 4, name: "april", label: "April", status: false},
-            { _id: 5, name: "may", label: "May", status: false},
-            { _id: 6, name: "june", label: "June", status: false},
-            { _id: 7, name: "july", label: "July", status: false},
-            { _id: 8, name: "august", label: "August", status: false},
-            { _id: 9, name: "september", label: "September", status: false},
-            { _id: 10, name: "october", label: "October", status: false},
-            { _id: 11, name: "november", label: "November", status: false},
-            { _id: 12, name: "december", label: "December", status: false},
-        ],
-        activeMonth: 1,
-        pageItems: 3,
+        reportData: [],
+        months: [],
+        activeMonth: -1,
+        years: [],
+        activeYear: 0,
+        pageItems: 10,
         currentPage: 0,
         dataLength: null,
-        token: localStorage.jwt,
     }
 
     // Event Handlers
 
-    handleChangeEvent = month => {
-        this.setState( {activeMonth : month })
-        this.setState({currentPage: 0})
-        // console.log(this.state.activeMonth)
-    }
     handlePageEvent = (page) => {
-        // console.log('Current Page: ', page)
         this.setState({currentPage: page})
     }
 
     // Hooks
     async componentDidMount(){
-        const { data } = await getReport()
-        const dataLength = data.length
-        this.setState({data})
+        // Query Report Data
+        const { data : reportData } = await getReport()
+        this.setState({reportData})
+
+        //Find Data Length 
+        const dataLength = reportData.length
         this.setState({dataLength})
-        const newMonths = this.groupItemStatus()
-        this.setState({months: newMonths})
         
-        // this.setState({months})
+        // Find number of Years
+        const years = this.getYearsArr(reportData)  
+        this.setState({years})
     }
 
-    
-
-
-    // Pagination 
-    filterData(){
-        const {activeMonth, data, months } = this.state
-        let numberMonth = activeMonth
-        if(activeMonth === 0){
-            numberMonth += 1
+    filterDataByMonth(data){
+        const { 
+            activeMonth, 
+            months 
+        } = this.state
+       
+        if(data.length !== 0 && months.length !== 0 && activeMonth >= 0 ){
+            const monthFiltered = data.filter(item => item.month === months[activeMonth].name);
+            return monthFiltered
         }
-        const filtered = data.filter(item => item.month === months[numberMonth].name);
-        return filtered
+       
+        return []
     }
+
 
     paginate(pageItems, currentPage, data ){
-        // console.log("unPag data: ", data)
-        // console.log("currentPage: ", currentPage)
         let startIndex = currentPage * pageItems;
         const paginatedData = data.slice(startIndex, startIndex + pageItems)
-        // console.log("PagData: ", paginatedData)
         return paginatedData
     }
 
-    
-
     render() { 
-        const { activeMonth, pageItems, currentPage, months, data} = this.state
-        // console.log("Selected Month:" , activeMonth)
-        const newMonths = this.groupItemStatus()
-        console.log("newMonths: ", newMonths)
-        const filtered = this.filterData()
-        // console.log(data)
-        const dataLength = filtered.length;
-        const paginated = this.paginate(pageItems, currentPage, filtered)
+        const {  
+            activeMonth, 
+            years, 
+            activeYear, 
+            pageItems, 
+            currentPage
+        } = this.state
+        
+        // List Group
+        const filteredDataByYear = this.renderMonth()
+        const listGroupMonths = this.getMonthsArr(filteredDataByYear)
+        
+        // Pagination
+        const filteredDataByMonth = this.filterDataByMonth(filteredDataByYear)
+        const paginated = this.paginate(pageItems, currentPage, filteredDataByMonth)
+        const dataLength = filteredDataByMonth.length;
         
         return ( 
         <div className="m-2">
+           <p className="h1"><span className="badge badge-pill badge-success mb-4">Reports</span></p>
            <ListGroup 
-            items={newMonths} 
-            onItemSelect={this.handleChangeEvent}
-            activeClass={activeMonth}
-            keyProperty="_id"
-            valueProperty="label"
-            
+                items={years}
+                onItemSelect={this.handleYearChange}
+                valueProperty="label"
+                keyProperty="_id"
+                activeClass={activeYear}
+                title="Select Year"
+           />
+           <ListGroup 
+                items={listGroupMonths} 
+                onItemSelect={this.handleMonthChange}
+                valueProperty="label"
+                keyProperty="_id"
+                activeClass={activeMonth}
+                title="Select Month"
             />
             <div className="table-responsive">
                 <table className="table table-striped table-sm">
@@ -112,10 +109,10 @@ class Report extends ListGroup {
                     {paginated.map( entry => 
                         <tr key={entry._id}>
                             <td>{entry.description}</td>
-                            <td>{entry.category}</td>
-                            <td>{entry.month} {entry.day} {entry.year}</td>
-                            <td>{entry.amount}</td>
-                            <td>{entry.account}</td>
+                            <td>{entry.category.charAt(0).toUpperCase() + entry.category.slice(1)}</td>
+                            <td>{entry.month.charAt(0).toUpperCase() + entry.month.slice(1) +","} {entry.day} {entry.year}</td>
+                            <td>{"$" + entry.amount}</td>
+                            <td>{entry.account.charAt(0).toUpperCase() + entry.account.slice(1)}</td>
                         </tr>
                     )}
                 </tbody>

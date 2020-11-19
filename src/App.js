@@ -13,14 +13,10 @@ import Register from "./components/registerForm"
 import Profile from "./components/profile"
 import Logout from "./components/logout"
 
-// console.log("Env: ", process.env.REACT_APP_API_URL)
 class App extends Component {
-  state = {  }
-
+ 
   componentDidMount () {
     const user = auth.getCurrentUser()
-    // console.log("User Gotten: ", user)
-    // console.log("Auth call: ", auth.getJwt())
     this.setState({user})  
   }
 
@@ -39,7 +35,8 @@ class App extends Component {
         <ProtectedRoute path="/profile" component={Profile} />
         <ProtectedRoute path="/logout" component={Logout} />
         <Route path="/welcome" component={Welcome} />
-        <Redirect to="/main/dashboard"/>
+        {/* <Redirect to="/main/dashboard"/> */}
+        <Redirect to="/main/report" />
       </Switch>
     </div>
     );

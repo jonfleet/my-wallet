@@ -1,8 +1,14 @@
 import React from 'react';
 
 const BudgetTable = (props) => {
-    // console.log("Props: ", props)
-    const {data} = props
+    
+    const {data, activeMonth, activeYear} = props
+    
+    let budget = null
+    
+    if(data.length !== 0 && activeMonth && activeYear) {
+        budget = data[activeYear][activeMonth]    
+    }
     
     return (
         <table className="table w-25">
@@ -14,11 +20,11 @@ const BudgetTable = (props) => {
                 </tr>
             </thead>
             <tbody>
-                {data ? data.map(item => (
+                {budget ? budget.map(item => (
                     <tr key={item.category}>
-                        <td>{item.category}</td>
-                        <td>{item.spent}</td>
-                        <td>{item.budget}</td>
+                        <td>{item.category.charAt(0).toUpperCase() + item.category.slice(1)}</td>
+                        <td>{"$" + item.spent}</td>
+                        <td>{"$" + item.budget}</td>
                     </tr>
                 )): null}
             </tbody>

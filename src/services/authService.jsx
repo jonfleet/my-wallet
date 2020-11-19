@@ -3,9 +3,7 @@ import jwt_decode from "jwt-decode"
 
 
 const tokenKey = "jwt"
-// const apiEndpoint = config.apiEndpoint + "/auth"
 const apiEndpoint = "/auth"
-// http.setJwt(localStorage.getItem(tokenKey))
 
 
 export function login(username, password){

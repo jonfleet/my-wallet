@@ -4,13 +4,11 @@ import http from "./httpService"
 const apiEndpoint = "/postExpense"
 
 export async function postExpense (expense){
-    // console.log('postExpense Function')
+    
     try {
         await http.post(apiEndpoint, expense);
         window.location.reload()
     } catch (er){
         console.log(er)
     }
-    
-    
 }
