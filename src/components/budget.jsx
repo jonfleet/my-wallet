@@ -43,7 +43,6 @@ class Budget extends ListGroup {
     // Render Months
 
     async changeBudgetTable(changeOptions){
-        console.log(changeOptions)
         await changeBudget(changeOptions)
         window.location = "/main/budget"
     }

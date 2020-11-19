@@ -6,7 +6,7 @@ axios.defaults.headers.common['x-auth-token'] = localStorage.getItem('jwt');
 axios.defaults.headers.common['Access-Control-Allow-Origin'] = process.env.REACT_APP_API_URL
 
 axios.interceptors.request.use( (request) => {
-    
+    // console.log(request)
     return request
     }, (error) => {
     

@@ -39,7 +39,7 @@ class BudgetForm extends Form {
            category: Joi.string().required().min(1).max(14).label("Category"),
            amount: Joi.number().required().min(0).max(10000).label("Amount"),
            activeMonth: Joi.string().required().label("Month"),
-           activeYear: Joi.number().required().min(2020).max(2100).label("Year")
+           activeYear: Joi.number().required().min(2018).max(2100).label("Year")
         }),
         errors : {}   
     }
@@ -66,6 +66,7 @@ class BudgetForm extends Form {
 
     handleSubmit = (e) => {
         e.preventDefault()
+        console.log("submited")
         const {onSubmit} = this.props
         const {data} = this.state
         const errors = this.validateProperty()

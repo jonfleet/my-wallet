@@ -39,7 +39,7 @@ class Expense extends Form {
             category : Joi.string().min(1).max(20).required().label("Category"),
             day: Joi.number().min(1).max(2).required().label("Day"),
             month: Joi.string().min(1).max(9).required().label("Month"),
-            year: Joi.number().required().min(2020).max(2100).label("Year"),
+            year: Joi.number().required().min(2018).max(2100).label("Year"),
             amount: Joi.number().min(1).max(100000).required().label("Amount"),
             account: Joi.string().min(1).max(16).required().label("Account")
         }),
@@ -76,10 +76,14 @@ class Expense extends Form {
             {name: "december", label :"December"}
         ],
         years :[
+            {name: 2018, label: "2018"},
+            {name: 2019, label: "2019"},
             {name: 2020, label: "2020"},
             {name: 2021, label: "2021"},
             {name: 2022, label: "2022"},
-            {name: 2023, label: "2023"}
+            {name: 2023, label: "2023"},
+            {name: 2024, label: "2024"},
+            {name: 2025, label: "2025"}
         ], 
         accounts : [
             {name: "Visa" , label: "Visa"},

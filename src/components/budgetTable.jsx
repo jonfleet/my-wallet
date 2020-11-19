@@ -6,7 +6,7 @@ const BudgetTable = (props) => {
     
     let budget = null
     
-    if(data.length !== 0 && activeMonth && activeYear) {
+    if( activeMonth && activeYear) {
         budget = data[activeYear][activeMonth]    
     }
     
