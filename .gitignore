@@ -10,6 +10,7 @@
 
 # production
 /build
+/heroku-cra-node
 
 # misc
 .DS_Store
