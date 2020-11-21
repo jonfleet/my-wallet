@@ -71,7 +71,7 @@ render() {
         >Sign In
         </button>
         <NewUser />
-        <p className="mt-3 mb-3 text-muted text-center">&copy; My Wallet Inc 2020</p>
+        <p className="mt-3 mb-3 text-muted text-center">&copy; My Wallet Inc 2021</p>
     </form>
     );
   }
