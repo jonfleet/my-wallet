@@ -1,6 +1,6 @@
 import axios from "axios";
 
-axios.defaults.baseURL = process.env.API_URL
+axios.defaults.baseURL = "https://mysterious-bayou-32982.herokuapp.com"
 axios.defaults.headers.common['x-auth-token'] = localStorage.getItem('jwt');
 console.log("API URL", process.env.API_URL)
 // test
