@@ -10,7 +10,7 @@ class Report extends ListGroup {
         activeMonth: -1,
         years: [],
         activeYear: 0,
-        pageItems: 10,
+        pageItems: 6,
         currentPage: 0,
         dataLength: null,
     }
