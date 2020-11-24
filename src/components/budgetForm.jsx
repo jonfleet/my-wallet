@@ -92,7 +92,7 @@ class BudgetForm extends Form {
                 <form onSubmit={this.handleSubmit}>
                     
                     <h1><div className="badge badge-pill badge-success">Change Budget</div></h1>
-                    <div className="container">
+                    <div className="">
                         <div className="input-group mb-3 w-50">
                             <DropDownInput 
                                 label="Category"
