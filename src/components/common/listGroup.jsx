@@ -25,12 +25,14 @@ class ListGroup extends Component {
     handleMonthChange = (monthId, months) => {
         this.setState({months})
         this.setState({activeMonth: monthId})
+        this.setState({currentPage: 0})
         
     }
 
     handleYearChange = (year) => {
         this.setState({activeYear: year})
         this.setState({activeMonth: -1})
+        this.setState({currentPage: 0})
     }
 
     // Get The initial ListGroup Data Arrays 
