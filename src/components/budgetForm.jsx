@@ -116,7 +116,7 @@ class BudgetForm extends Form {
                         </div>
                         <button 
                             type="submit" 
-                            className="btn btn-primary" 
+                            className="btn btn-primary mb-2" 
                             disabled={activeMonth >= 0 ? false : true}
                         >Submit
                         </button>

@@ -88,8 +88,6 @@ class Budget extends ListGroup {
                         activeMonth={month}
                         activeYear={year}
                     />
-                </div>
-                <div className="col-8">
                     <BudgetForm 
                     onSubmit={this.changeBudgetTable}
                     activeMonth={activeMonth}
