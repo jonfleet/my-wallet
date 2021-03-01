@@ -44,6 +44,7 @@ class Heading extends Component {
             </div>
           </NavLink>
 
+          {/* <div className="set-menu-size"> */}
           <button
             onClick={this.toggleMenu}
             className="heading-menu-icon navbar-toggler m-2"
@@ -51,6 +52,7 @@ class Heading extends Component {
           >
             <span className="navbar-toggler-icon"></span>
           </button>
+          {/* </div> */}
 
           <span className="heading-menu-content">
             <HeadingProfile user={user} />
