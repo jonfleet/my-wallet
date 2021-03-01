@@ -1,0 +1,20 @@
+/* .budget-container-left {
+  display: flex;
+  flex-basis: 800px;
+} */
+
+.change-budget-height {
+  height: 20rem;
+}
+.min-width {
+  /* overflow: scroll; */
+  /* overflow: hidden; */
+}
+
+@media screen and (max-width: 900px) {
+  .budget-container-left {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+  }
+}

@@ -1,0 +1,23 @@
+.overflow {
+  /* overflow: hidden; */
+}
+
+/* .report-width {
+  max-width: 80%;
+} */
+@media screen and (max-width: 576px) {
+  .report-width {
+    width: 90vw;
+  }
+}
+@media screen and (min-width: 576px) {
+  .report-width {
+    max-width: 61vw;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .report-width {
+    max-width: 90vw;
+  }
+}

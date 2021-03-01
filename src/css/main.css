@@ -1,0 +1,20 @@
+.set-viewport {
+  min-height: 90vh;
+  overflow: hidden;
+}
+
+.row-width {
+  width: 99.9vw;
+}
+
+@media screen and (max-width: 576px) {
+  .sidebar-menu-width {
+    width: 100%;
+  }
+}
+
+@media screen and (min-width: 576px) {
+  .sidebar-menu-width {
+    width: 10rem;
+  }
+}

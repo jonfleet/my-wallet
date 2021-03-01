@@ -1,0 +1,34 @@
+.sidebar-menu-disabled {
+  height: 0;
+  transition: height 0.5s;
+  overflow: hidden;
+}
+
+.sidebar-menu-enabled {
+  height: 8rem;
+  transition: height 0.5s;
+  overflow: auto;
+}
+
+.chevron-size {
+  font-size: 30px;
+}
+
+.chevron-size:hover {
+  cursor: pointer;
+  background-color: rgb(238, 238, 238);
+}
+
+/* Phone Size  */
+@media screen and (min-width: 576px) {
+  .sidebar-menu-responsive {
+    display: none;
+  }
+  .sidebar-menu-enabled {
+    height: auto;
+  }
+
+  .sidebar-menu-disabled {
+    height: auto;
+  }
+}

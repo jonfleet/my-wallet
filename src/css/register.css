@@ -1,0 +1,8 @@
+.set-width {
+  width: 400px;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+}

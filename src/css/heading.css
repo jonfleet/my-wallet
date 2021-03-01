@@ -1,0 +1,35 @@
+.heading-menu-icon {
+  font-size: 2.5rem;
+  padding-right: 1rem;
+}
+
+.enabled {
+  height: 2.5rem;
+  transition: height 0.5s;
+}
+
+.disabled {
+  height: 0;
+  transition: height 0.5s;
+}
+
+.center-right {
+  display: flex;
+  justify-content: flex-end;
+}
+
+h6 {
+  color: white;
+}
+
+@media screen and (min-width: 576px) {
+  .heading-menu-icon {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .heading-menu-content {
+    display: none;
+  }
+}

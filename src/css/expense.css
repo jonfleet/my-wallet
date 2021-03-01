@@ -1,0 +1,23 @@
+/* @media screen and (max-width: 900px) {
+  .expense-container-position {
+    width: 100wv;
+  }
+} */
+
+@media screen and (min-width: 577px) {
+  .expense-container-position {
+    width: 60vw;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .expense-container-position {
+    width: 50vw;
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .expense-container-position {
+    width: 40vw;
+  }
+}
